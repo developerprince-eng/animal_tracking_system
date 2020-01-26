@@ -13,11 +13,21 @@ The first phase it keeps track of a single animal this is demo project.
 |  POST   | /animal_tracking_system/api/controllers/tracker |  longitude, latitude      |                           |
 
 ## SETUP
+```bash
+python -m venv dev
 
+source dev/bin/activate
+```
 ## RUN
+```bash
+export FLASK_APP=run.py #linus or unix environment
+export FLASK_ENV=development #linux or unix environment
 
+set FLASK_APP=run.py #Win environment
+set FLASK_ENV=development #Win environment
+```
 ### start server
 ```bash
-php -S localhost:4000 -t ~/<MyPC>/animal_tracking_system
+flask run
 ```
 Coming Soon

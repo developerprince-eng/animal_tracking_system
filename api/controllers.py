@@ -1,12 +1,18 @@
+
 import os
 from flask import flash, redirect, render_template, url_for, request, Flask, jsonify, send_file
+import json
+from datetime import datetime 
+import time
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 from . import app
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
+from . import mongoconfig
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 
 #BAD REQUEST
 @app.errorhandler(400)
@@ -48,3 +54,32 @@ def server_error_gateway_timeout(e):
 def index():
 	resp = jsonify({'message' : 'The API IS READY'})
 	return resp
+
+@app.route("/animal_tracking_system/api/controllers/tracker", methods=['GET', 'POST'])
+def track():
+	if request.method == 'POST':
+		longitude = request.values.get('longitude') 
+		latitude = request.values.get('latitude') 
+		date_time = str(datetime.now())
+		db = mongoconfig['animal_track']
+		collection = db['locations']
+		loc_data= {
+            "longitude" : longitude,
+            "latitude" : latitude,
+			"created_time" : date_time
+        }
+		collection.insert_one(loc_data)
+		resp = jsonify({'status' :'success'})
+		resp.status_code = 201
+		return resp
+		
+	else:
+		db = mongoconfig['animal_track']
+		collection = db['locations']
+		documents = collection.find()
+		response = []
+		for document in documents:
+			document['_id'] = str(document['_id'])
+			response.append(document)
+		return json.dumps(response)
+

@@ -1,2 +1,4 @@
-test.php
+.vscode
 .env
+/dev
+__pycache__
