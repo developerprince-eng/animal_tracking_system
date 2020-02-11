@@ -9,5 +9,6 @@ load_dotenv(dotenv_path)
 
 mongo_uri = config.MONGODB_URI
 
+
 class DBCONFIG():    
     client = MongoClient(mongo_uri)

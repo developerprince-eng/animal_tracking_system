@@ -55,15 +55,19 @@ def index():
 	resp = jsonify({'message' : 'The API IS READY'})
 	return resp
 
-@app.route("/animal_tracking_system/api/controllers/tracker", methods=['GET', 'POST'])
+@app.route("/track", methods=['GET', 'POST'])
 def track():
 	if request.method == 'POST':
+		temperature = request.values.get('temperature')
+		heart_rate = request.values.get('heart_rate')
 		longitude = request.values.get('longitude') 
 		latitude = request.values.get('latitude') 
 		date_time = str(datetime.now())
-		db = mongoconfig['animal_track']
+		db = mongoconfig['heroku_35m4qbnd']
 		collection = db['locations']
 		loc_data= {
+            "temperature" : temperature,
+            "heart_rate" : heart_rate,
             "longitude" : longitude,
             "latitude" : latitude,
 			"created_time" : date_time
@@ -74,7 +78,7 @@ def track():
 		return resp
 		
 	else:
-		db = mongoconfig['animal_track']
+		db = mongoconfig['heroku_35m4qbnd']
 		collection = db['locations']
 		documents = collection.find()
 		response = []
