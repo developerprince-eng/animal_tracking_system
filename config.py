@@ -9,7 +9,7 @@ else:
 	SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 if os.environ.get('MONGODB_URI') is None:
-	MONGODB_URI = 'mongodb://localhost:27017/'
+	MONGODB_URI = 'mongodb+srv://developerprince:WqkpTkjRkjdOJfAq@cluster0-o0c1g.mongodb.net/child_track'
 else:
 	MONGODB_URI = os.environ.get('MONGODB_URI')
 
