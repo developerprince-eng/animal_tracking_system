@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name='animal_trackig_application'
